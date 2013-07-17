@@ -1,0 +1,53 @@
+Knot
+====
+
+Lightweight dependency container without magic.
+
+
+Built with a lot of inspiration from ``Pimple`` (http://pimple.sensiolabs.org/)
+
+
+Status
+------
+Consider this project a work in progress.
+
+
+Usage
+-----
+
+.. code-block:: python
+
+    from knot import Container
+
+    c = Container({'host': 'localhost', 'port': 6379, 'db': 0})
+
+    @c.service('redis', True)
+    def redis(c):
+        from redis import Redis
+
+        client = Redis(host=c['host'], port=c['port'], db=c['db'])
+        return client
+
+    @c.service('stats', True)
+    def stats(c):
+        from somewhere import Counter
+
+        counter = Counter(c('redis'))
+        return counter
+
+
+    c('stats').incr('reads')
+
+
+TODO
+----
+
+- Register at PyPi
+- Documentation
+- Setup Travis CI
+
+
+License
+-------
+
+MIT, see ``LICENSE`` for more details.
