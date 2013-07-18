@@ -1,0 +1,14 @@
+language: python
+
+python:
+  - 2.6
+  - 2.7
+  - 3.3
+
+script: make run-test
+
+install:
+  - pip install -r requirements-dev.txt --use-mirrors
+
+notifications:
+  email: false

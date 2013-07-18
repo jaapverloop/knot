@@ -44,7 +44,6 @@ TODO
 
 - Register at PyPi
 - Documentation
-- Setup Travis CI
 
 
 License
