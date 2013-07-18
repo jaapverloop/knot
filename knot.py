@@ -11,6 +11,7 @@ Lightweight dependency container without magic.
 
 """
 
+
 class Container(dict):
     def __call__(self, key, default=None):
         service = super(Container, self).get(key, default)
