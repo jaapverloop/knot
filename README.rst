@@ -1,6 +1,9 @@
 Knot
 ====
 
+.. image:: https://travis-ci.org/jaapverloop/knot.png?branch=master
+  :target: https://travis-ci.org/jaapverloop/knot
+
 Lightweight dependency container without magic.
 
 
