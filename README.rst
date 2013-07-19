@@ -42,6 +42,15 @@ Usage
     c('stats').incr('reads')
 
 
+Tests
+-----
+
+.. code-block:: console
+
+  $ pip install -r requirements-dev.txt
+  $ make run-tests
+
+
 TODO
 ----
 
