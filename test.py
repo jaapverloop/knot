@@ -11,6 +11,17 @@ class TestContainer(unittest.TestCase):
 
         self.assertRaises(KeyError, lambda: c['unknown'])
 
+    def test_wrapper_looks_like_service(self):
+        c = knot.Container()
+
+        @c.service('service')
+        def service(container):
+            """Docstring."""
+            pass
+
+        self.assertEqual(c['service'].__name__, 'service')
+        self.assertEqual(c['service'].__doc__, 'Docstring.')
+
     def test_returns_if_value(self):
         c = knot.Container({'value': 'foobar'})
 
