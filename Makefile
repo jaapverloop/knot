@@ -1,2 +1,2 @@
 run-tests:
-	py.test ./test.py
+	py.test
