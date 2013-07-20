@@ -8,7 +8,7 @@ python:
 script: make run-tests
 
 install:
-  - pip install -r requirements-dev.txt --use-mirrors
+  - pip install -r requirements-travis.txt --use-mirrors
 
 notifications:
   email: false
