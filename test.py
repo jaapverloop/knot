@@ -46,9 +46,9 @@ class TestContainer(unittest.TestCase):
         dict1 = c('service')
         dict2 = c('service')
 
-        self.assertIsInstance(dict1, dict)
-        self.assertIsInstance(dict2, dict)
-        self.assertIs(dict1, dict2)
+        assert isinstance(dict1, dict)
+        assert isinstance(dict2, dict)
+        assert dict1 is dict2
 
 
 if __name__ == '__main__':
