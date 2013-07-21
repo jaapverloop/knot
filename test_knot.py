@@ -6,11 +6,6 @@ import knot
 
 
 class TestContainer(unittest.TestCase):
-    def test_throws_exception_with_unknown_key(self):
-        c = knot.Container()
-
-        self.assertRaises(KeyError, lambda: c['unknown'])
-
     def test_wrapper_looks_like_service(self):
         c = knot.Container()
 
