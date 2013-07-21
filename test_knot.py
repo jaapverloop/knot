@@ -31,6 +31,12 @@ class TestContainer(unittest.TestCase):
 
         self.assertEqual(c('service'), 'foobar')
 
+    def test_returns_default_with_unknown_key(self):
+        c = knot.Container()
+
+        self.assertEqual(c('service', 'foobar'), 'foobar')
+        self.assertEqual(c('service', lambda c: 'foobar'), 'foobar')
+
     def test_shares_service(self):
         c = knot.Container()
 
