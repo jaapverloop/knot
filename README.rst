@@ -24,14 +24,14 @@ Usage
 
     c = Container({'host': 'localhost', 'port': 6379, 'db': 0})
 
-    @c.service('redis', True)
+    @c.factory('redis', True)
     def redis(c):
         from redis import Redis
 
         client = Redis(host=c['host'], port=c['port'], db=c['db'])
         return client
 
-    @c.service('stats', True)
+    @c.factory('stats', True)
     def stats(c):
         from somewhere import Counter
 
