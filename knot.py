@@ -16,10 +16,10 @@ from functools import wraps
 
 class Container(dict):
     def __call__(self, key, default=None):
-        service = super(Container, self).get(key, default)
-        return service(self) if callable(service) else service
+        factory = super(Container, self).get(key, default)
+        return factory(self) if callable(factory) else factory
 
-    def service(self, key, share=False):
+    def factory(self, key, share=False):
         def decorator(f):
             @wraps(f)
             def wrapper(container):
