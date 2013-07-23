@@ -4,8 +4,10 @@ Knot
 .. image:: https://travis-ci.org/jaapverloop/knot.png?branch=master
   :target: https://travis-ci.org/jaapverloop/knot
 
-Lightweight dependency container without magic.
+Knot is simple dependency container for Python.
 
+This small module provides just a single class named ``Container``. It
+resolves dependencies in a DIY (Do-It-Yourself) manner instead of reflection.
 
 Built with a lot of inspiration from ``Pimple`` (http://pimple.sensiolabs.org/)
 
