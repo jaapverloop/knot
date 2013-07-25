@@ -59,14 +59,14 @@ class Container(dict):
         :param key: The identifier of the factory.
         :param share: Whether the first response should be shared.
         """
-        def decorator(f):
-            @wraps(f)
+        def decorator(factory):
+            @wraps(factory)
             def wrapper(container):
                 if not share:
-                    return f(container)
+                    return factory(container)
 
                 if '_' not in wrapper.__dict__:
-                    wrapper._ = f(container)
+                    wrapper._ = factory(container)
 
                 return wrapper._
 
