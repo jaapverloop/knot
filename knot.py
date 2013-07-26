@@ -4,7 +4,7 @@
 knot
 ~~~~
 
-Knot is simple dependency container for Python.
+Knot is a simple dependency container for Python.
 
 :copyright: (c) 2013 by Jaap Verloop.
 :license: MIT, see LICENSE for more details.
