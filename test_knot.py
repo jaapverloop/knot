@@ -6,50 +6,60 @@ import knot
 
 
 class TestContainer(unittest.TestCase):
-    def test_wrapper_looks_like_factory(self):
-        c = knot.Container()
-
-        @c.factory('factory')
-        def factory(container):
-            """Docstring."""
-            pass
-
-        self.assertEqual(c['factory'].__name__, 'factory')
-        self.assertEqual(c['factory'].__doc__, 'Docstring.')
-
-    def test_returns_if_value(self):
+    def test_returns_value(self):
         c = knot.Container({'value': 'foobar'})
 
         self.assertEqual(c('value'), 'foobar')
 
-    def test_calls_if_factory(self):
+    def test_calls_factory(self):
         c = knot.Container()
 
-        @c.factory('factory')
-        def factory(container):
-            return 'foobar'
+        def foo(container):
+            return 'bar'
 
-        self.assertEqual(c('factory'), 'foobar')
+        c.add_factory(foo, 'foo')
 
-    def test_returns_default_with_unknown_key(self):
+        self.assertEqual(c('foo'), 'bar')
+
+    def test_returns_default(self):
         c = knot.Container()
 
-        self.assertEqual(c('factory', 'foobar'), 'foobar')
-        self.assertEqual(c('factory', lambda c: 'foobar'), 'foobar')
+        self.assertEqual(c('foo', 'bar'), 'bar')
+        self.assertEqual(c('foo', lambda c: 'baz'), 'baz')
 
-    def test_shares_factory(self):
+    def test_uses_name_callable(self):
         c = knot.Container()
 
-        @c.factory('factory', True)
-        def factory(container):
+        def foo(container):
+            return 'bar'
+
+        c.add_factory(foo)
+
+        self.assertEqual(c('foo'), 'bar')
+
+    def test_caches_factory(self):
+        c = knot.Container()
+
+        def foobar(container):
             return {}
 
-        dict1 = c('factory')
-        dict2 = c('factory')
+        c.add_factory(foobar, 'foobar', True)
+
+        dict1 = c('foobar')
+        dict2 = c('foobar')
 
         assert isinstance(dict1, dict)
         assert isinstance(dict2, dict)
         assert dict1 is dict2
+
+    def test_decorates_factory(self):
+        c = knot.Container()
+
+        @c.factory()
+        def foo(container):
+            return 'bar'
+
+        self.assertEqual(c('foo'), 'bar')
 
 
 if __name__ == '__main__':
