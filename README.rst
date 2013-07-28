@@ -4,60 +4,45 @@ Knot
 .. image:: https://travis-ci.org/jaapverloop/knot.png?branch=master
   :target: https://travis-ci.org/jaapverloop/knot
 
-Knot is simple dependency container for Python.
-
-This small module provides just a single class named ``Container``. It
-resolves dependencies in a DIY (Do-It-Yourself) manner instead of reflection.
-
-Built with a lot of inspiration from ``Pimple`` (http://pimple.sensiolabs.org/)
+Knot is a simple dependency container for Python.
 
 
-Status
-------
-Consider this project a work in progress.
+Inspiration
+-----------
+Pimple (http://pimple.sensiolabs.org/)
 
 
-Usage
------
+Example
+-------
 
 .. code-block:: python
 
     from knot import Container
 
-    c = Container({'host': 'localhost', 'port': 6379, 'db': 0})
+    c = Container()
 
-    @c.factory('redis', True)
-    def redis(c):
-        from redis import Redis
+    @c.factory(cache=True)
+    def app(c):
+        from somewhere import App
+        app = App()
 
-        client = Redis(host=c['host'], port=c['port'], db=c['db'])
-        return client
-
-    @c.factory('stats', True)
-    def stats(c):
-        from somewhere import Counter
-
-        counter = Counter(c('redis'))
-        return counter
-
-
-    c('stats').incr('reads')
+        return app
 
 
 Tests
 -----
 
+To run the tests, install ``pytest`` first:
+
 .. code-block:: console
 
-  $ pip install -r requirements-dev.txt
-  $ make run-tests
+  $ pip install pytest
 
+Then, run the tests with the following command:
 
-TODO
-----
+.. code-block:: console
 
-- Register at PyPi
-- Documentation
+  $ make test
 
 
 License
