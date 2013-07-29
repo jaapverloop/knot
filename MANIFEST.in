@@ -1,0 +1,4 @@
+include Makefile
+include LICENSE
+include README.rst
+include test_knot.py
