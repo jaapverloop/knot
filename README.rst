@@ -29,6 +29,16 @@ Example
         return app
 
 
+Installation
+------------
+
+Install Knot with the following command:
+
+.. code-block:: console
+
+  $ pip install knot
+
+
 Tests
 -----
 
