@@ -1,6 +1,9 @@
 Knot
 ====
 
+.. image:: https://badge.fury.io/py/knot.png
+  :target: http://badge.fury.io/py/knot
+
 .. image:: https://travis-ci.org/jaapverloop/knot.png?branch=master
   :target: https://travis-ci.org/jaapverloop/knot
 
