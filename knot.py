@@ -11,20 +11,32 @@ Knot is a simple dependency container for Python.
 
 """
 
-from functools import wraps
+from functools import update_wrapper
 
 
-def cache_function(f):
-    """A decorator to cache the response of a function call."""
-    cache = []
+class FunctionCache(object):
+    """The :class:`FunctionCache` object wraps a function and ensures it's
+    called only once by caching the return value.
+    """
 
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        value = cache.pop() if cache else f(*args, **kwargs)
-        cache.append(value)
-        return value
+    def __init__(self, f):
+        """Redirects function calls to :meth:`__call__`."""
+        self._f = f
+        self._cache = None
+        update_wrapper(self, f)
 
-    return wrapper
+    def __call__(self, *args, **kwargs):
+        """Returns the return value of the real function. First it will attempt
+        to return from cache before calling the real function.
+        """
+        if not self.cached:
+            self._cache = self._f(*args, **kwargs)
+        return self._cache
+
+    @property
+    def cached(self):
+        """Indicates whether the real function is called and cached."""
+        return self._cache is not None
 
 
 class Container(dict):
@@ -98,4 +110,11 @@ class Container(dict):
         :param cache: whether to cache the return value of the factory,
                       defaults to false.
         """
-        self[name or f.__name__] = cache_function(f) if cache else f
+        self[name or f.__name__] = FunctionCache(f) if cache else f
+
+    def is_cached(self, name):
+        """Determines if the return value of a factory is cached.
+
+        :param name: name of the factory
+        """
+        return super(Container, self).get(name).cached
