@@ -50,7 +50,8 @@ class FunctionCache(object):
     """
 
     def __init__(self, f):
-        """Redirects function calls to :meth:`__call__`."""
+        """Redirects function calls to :meth:`__call__` and updates itself to
+        look like the real function."""
         self._f = f
         self._cache = None
         update_wrapper(self, f)
@@ -65,7 +66,7 @@ class FunctionCache(object):
 
     @property
     def cached(self):
-        """Indicates whether the real function is called and cached."""
+        """Indicates whether a return value is cached."""
         return self._cache is not None
 
 
@@ -79,16 +80,18 @@ class Container(dict):
 
     def provide(self, name, default=None):
         """Gets the value registered with ``name`` and determines whether the
-        value is a provider or not. The ``default`` is used if ``name`` is
-        unknown.
+        value is a provider or a configuration setting. The ``default`` value
+        is returned if ``name`` is unknown.
 
         The registered value is interpreted as a provider if it's callable. The
         provider is called with a single argument, the current
         :class:`Container` object. Returns the return value of a provider or
-        the value itself in case it's not callable.
+        the value itself in case the value is not callable.
 
-        :param name: the name of the provider or value.
-        :param default: the default value.
+        :param name:
+            The name of the provider or configuration setting.
+        :param default:
+            The default value to return if name is unknown.
         """
         rv = super(Container, self).get(name)
         return rv(self) if callable(rv) else rv or default
@@ -116,7 +119,7 @@ class Container(dict):
         :param cache:
             Whether to cache the return value of the provider.
         :param name:
-            Name of the provider.
+            Alternative name of the provider.
             Default: name of the callable.
         """
         self[name or provider.__name__] = FunctionCache(provider) if cache else provider
