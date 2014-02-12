@@ -54,10 +54,10 @@ class TestContainer(unittest.TestCase):
         assert isinstance(dict2, dict)
         assert dict1 is dict2
 
-    def test_decorates_factory(self):
+    def test_registers_factory_with_decorator(self):
         c = knot.Container()
 
-        @c.factory()
+        @knot.factory(c)
         def foo(container):
             return 'bar'
 

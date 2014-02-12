@@ -14,6 +14,20 @@ Knot is a simple dependency container for Python.
 from functools import update_wrapper
 
 
+def factory(container, name=None, cache=False):
+    """A decorator to register a factory on the container.
+    For more information see :meth:`Container.add_factory`.
+
+    :param container:
+        Instance of :class:`Container`.
+    """
+    def decorator(factory):
+        container.add_factory(factory, name, cache)
+        return factory
+
+    return decorator
+
+
 class FunctionCache(object):
     """The :class:`FunctionCache` object wraps a function and ensures it's
     called only once by caching the return value.
@@ -62,30 +76,6 @@ class Container(dict):
         """
         factory = super(Container, self).get(name, default)
         return factory(self) if callable(factory) else factory
-
-    def factory(self, name=None, cache=False):
-        """A decorator to register a factory on the container. For more
-        information see :meth:`add_factory` which does basically the same
-        thing.
-
-        Example::
-
-            from knot import Container
-
-            c = Container()
-
-            @c.factory(cache=True)
-            def app(c):
-                from somewhere import App
-                app = App()
-
-                return app
-        """
-        def decorator(f):
-            self.add_factory(f, name, cache)
-            return f
-
-        return decorator
 
     def add_factory(self, f, name=None, cache=False):
         """Registers a factory on the container. A factory is a callable and
