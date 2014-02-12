@@ -77,7 +77,7 @@ class Container(dict):
     dictionary methods are available without any modifications.
     """
 
-    def __call__(self, name, default=None):
+    def provide(self, name, default=None):
         """Gets the value registered with ``name`` and determines whether the
         value is a provider or not. The ``default`` is used if ``name`` is
         unknown.

@@ -9,7 +9,7 @@ class TestContainer(unittest.TestCase):
     def test_returns_value(self):
         c = knot.Container({'value': 'foobar'})
 
-        self.assertEqual(c('value'), 'foobar')
+        self.assertEqual(c.provide('value'), 'foobar')
 
     def test_returns_return_value_provider(self):
         c = knot.Container()
@@ -19,12 +19,12 @@ class TestContainer(unittest.TestCase):
 
         c.add_provider(foo, False)
 
-        self.assertEqual(c('foo'), 'bar')
+        self.assertEqual(c.provide('foo'), 'bar')
 
     def test_returns_default(self):
         c = knot.Container()
 
-        self.assertEqual(c('foo', 'bar'), 'bar')
+        self.assertEqual(c.provide('foo', 'bar'), 'bar')
 
     def test_uses_alternative_name(self):
         c = knot.Container()
@@ -34,7 +34,7 @@ class TestContainer(unittest.TestCase):
 
         c.add_provider(foobar, False, 'foobaz')
 
-        self.assertEqual(c('foobaz'), 'foobar')
+        self.assertEqual(c.provide('foobaz'), 'foobar')
 
     def test_caches_return_value_provider(self):
         c = knot.Container()
@@ -45,8 +45,8 @@ class TestContainer(unittest.TestCase):
         c.add_provider(foobar, True)
 
         self.assertFalse(c.is_cached('foobar'))
-        dict1 = c('foobar')
-        dict2 = c('foobar')
+        dict1 = c.provide('foobar')
+        dict2 = c.provide('foobar')
         self.assertTrue(c.is_cached('foobar'))
 
         assert isinstance(dict1, dict)
@@ -60,7 +60,7 @@ class TestContainer(unittest.TestCase):
         def foo(container):
             return 'bar'
 
-        self.assertEqual(c('foo'), 'bar')
+        self.assertEqual(c.provide('foo'), 'bar')
 
     def test_registers_service_with_decorator(self):
         c = knot.Container()
@@ -69,7 +69,7 @@ class TestContainer(unittest.TestCase):
         def foo(container):
             return 'bar'
 
-        self.assertEqual(c('foo'), 'bar')
+        self.assertEqual(c.provide('foo'), 'bar')
 
     def test_registers_provider_with_decorator(self):
         c = knot.Container()
@@ -78,7 +78,7 @@ class TestContainer(unittest.TestCase):
         def foo(container):
             return 'bar'
 
-        self.assertEqual(c('foo'), 'bar')
+        self.assertEqual(c.provide('foo'), 'bar')
 
 
 if __name__ == '__main__':
