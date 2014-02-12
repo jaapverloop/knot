@@ -122,8 +122,15 @@ class Container(dict):
         self[name or provider.__name__] = FunctionCache(provider) if cache else provider
 
     def is_cached(self, name):
-        """Determines if the return value of a provider is cached.
+        """Determines if the return value is cached. Always returns false if
+        the registered value is not an instance of :class:`FunctionCache`.
 
-        :param name: name of the factory
+        :param name:
+            The name of the provider.
         """
-        return super(Container, self).get(name).cached
+        try:
+            cached = super(Container, self).get(name).cached
+        except AttributeError:
+            cached = False
+
+        return cached
