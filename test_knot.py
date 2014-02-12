@@ -6,11 +6,6 @@ import knot
 
 
 class TestContainer(unittest.TestCase):
-    def test_returns_value(self):
-        c = knot.Container({'value': 'foobar'})
-
-        self.assertEqual(c.provide('value'), 'foobar')
-
     def test_returns_return_value_provider(self):
         c = knot.Container()
 
@@ -21,20 +16,15 @@ class TestContainer(unittest.TestCase):
 
         self.assertEqual(c.provide('foo'), 'bar')
 
+    def test_returns_value(self):
+        c = knot.Container({'value': 'foobar'})
+
+        self.assertEqual(c.provide('value'), 'foobar')
+
     def test_returns_default(self):
         c = knot.Container()
 
         self.assertEqual(c.provide('foo', 'bar'), 'bar')
-
-    def test_uses_alternative_name(self):
-        c = knot.Container()
-
-        def foobar(container):
-            return 'foobar'
-
-        c.add_provider(foobar, False, 'foobaz')
-
-        self.assertEqual(c.provide('foobaz'), 'foobar')
 
     def test_caches_return_value_provider(self):
         c = knot.Container()
@@ -52,6 +42,16 @@ class TestContainer(unittest.TestCase):
         assert isinstance(dict1, dict)
         assert isinstance(dict2, dict)
         assert dict1 is dict2
+
+    def test_uses_alternative_name(self):
+        c = knot.Container()
+
+        def foobar(container):
+            return 'foobar'
+
+        c.add_provider(foobar, False, 'foobaz')
+
+        self.assertEqual(c.provide('foobaz'), 'foobar')
 
     def test_registers_factory_with_decorator(self):
         c = knot.Container()
