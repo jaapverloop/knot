@@ -82,16 +82,16 @@ class Container(dict):
         value is a provider or not. The ``default`` is used if ``name`` is
         unknown.
 
-        The value or ``default`` is interpreted as a provider if it's callable.
-        The provider is called with a single argument, the current
+        The registered value is interpreted as a provider if it's callable. The
+        provider is called with a single argument, the current
         :class:`Container` object. Returns the return value of a provider or
         the value itself in case it's not callable.
 
         :param name: the name of the provider or value.
         :param default: the default value.
         """
-        provider = super(Container, self).get(name, default)
-        return provider(self) if callable(provider) else provider
+        rv = super(Container, self).get(name)
+        return rv(self) if callable(rv) else rv or default
 
     def add_factory(self, factory, name=None):
         """Registers a factory on the container. A factory is a provider with

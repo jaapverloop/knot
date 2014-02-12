@@ -25,7 +25,6 @@ class TestContainer(unittest.TestCase):
         c = knot.Container()
 
         self.assertEqual(c('foo', 'bar'), 'bar')
-        self.assertEqual(c('foo', lambda c: 'baz'), 'baz')
 
     def test_uses_alternative_name(self):
         c = knot.Container()
