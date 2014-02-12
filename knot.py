@@ -17,13 +17,29 @@ from functools import update_wrapper
 def factory(container, name=None, cache=False):
     """A decorator to register a factory on the container.
     For more information see :meth:`Container.add_factory`.
-
-    :param container:
-        Instance of :class:`Container`.
     """
     def decorator(factory):
-        container.add_factory(factory, name, cache)
-        return factory
+        container.add_factory(factory, name)
+
+    return decorator
+
+
+def service(container, name=None):
+    """A decorator to register a service on a container.
+    For more information see :meth:`Container.add_service`.
+    """
+    def decorator(service):
+        container.add_service(service, name)
+
+    return decorator
+
+
+def provider(container, cache, name=None):
+    """A decorator to register a provider on a container.
+    For more information see :meth:`Container.add_provider`.
+    """
+    def decorator(provider):
+        container.add_provider(provider, cache, name)
 
     return decorator
 
@@ -54,7 +70,7 @@ class FunctionCache(object):
 
 
 class Container(dict):
-    """The :class:`Container` object acts as a central registry for factories
+    """The :class:`Container` object acts as a central registry for providers
     and configuration settings.
 
     This class is implemented as a subclass of ``dict``. All standard
@@ -63,47 +79,50 @@ class Container(dict):
 
     def __call__(self, name, default=None):
         """Gets the value registered with ``name`` and determines whether the
-        value is a factory or not. The ``default`` is used if ``name`` is
+        value is a provider or not. The ``default`` is used if ``name`` is
         unknown.
 
-        The value or ``default`` is interpreted as a factory if it's callable.
-        The factory is called with a single argument, the current
-        :class:`Container` object. Returns the return value of a factory or
+        The value or ``default`` is interpreted as a provider if it's callable.
+        The provider is called with a single argument, the current
+        :class:`Container` object. Returns the return value of a provider or
         the value itself in case it's not callable.
 
-        :param name: the name of the factory or value.
+        :param name: the name of the provider or value.
         :param default: the default value.
         """
-        factory = super(Container, self).get(name, default)
-        return factory(self) if callable(factory) else factory
+        provider = super(Container, self).get(name, default)
+        return provider(self) if callable(provider) else provider
 
-    def add_factory(self, f, name=None, cache=False):
-        """Registers a factory on the container. A factory is a callable and
-        takes exactly one argument, the :class:`Container` object.
-
-        Example::
-
-            from knot import Container
-
-            c = Container()
-
-            def app(c):
-                from somewhere import App
-                app = App()
-
-                return app
-
-            c.add_factory(app, cache=True)
-
-        :param name: optional name of the factory, otherwise the name of the
-                     callable will be used.
-        :param cache: whether to cache the return value of the factory,
-                      defaults to false.
+    def add_factory(self, factory, name=None):
+        """Registers a factory on the container. A factory is a provider with
+        the ``cache`` argument set to ``False``.
+        For more information see :meth:`add_provider`.
         """
-        self[name or f.__name__] = FunctionCache(f) if cache else f
+        self.add_provider(factory, False, name)
+
+    def add_service(self, service, name=None):
+        """Registers a service on the container. A service is a provider with
+        the ``cache`` argument set to ``False``.
+        For more information see :meth:`add_provider`.
+        """
+        self.add_provider(service, True, name)
+
+    def add_provider(self, provider, cache, name=None):
+        """Registers a provider on the container.
+
+        :param provider:
+            Anything that's callable and expects exactly one argument, the
+            :class:`Container` object.
+        :param cache:
+            Whether to cache the return value of the provider.
+        :param name:
+            Name of the provider.
+            Default: name of the callable.
+        """
+        self[name or provider.__name__] = FunctionCache(provider) if cache else provider
 
     def is_cached(self, name):
-        """Determines if the return value of a factory is cached.
+        """Determines if the return value of a provider is cached.
 
         :param name: name of the factory
         """

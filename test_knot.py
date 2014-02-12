@@ -11,13 +11,13 @@ class TestContainer(unittest.TestCase):
 
         self.assertEqual(c('value'), 'foobar')
 
-    def test_calls_factory(self):
+    def test_returns_return_value_provider(self):
         c = knot.Container()
 
         def foo(container):
             return 'bar'
 
-        c.add_factory(foo, 'foo')
+        c.add_provider(foo, False)
 
         self.assertEqual(c('foo'), 'bar')
 
@@ -33,17 +33,17 @@ class TestContainer(unittest.TestCase):
         def foo(container):
             return 'bar'
 
-        c.add_factory(foo)
+        c.add_provider(foo, False)
 
         self.assertEqual(c('foo'), 'bar')
 
-    def test_caches_factory(self):
+    def test_caches_return_value_provider(self):
         c = knot.Container()
 
         def foobar(container):
             return {}
 
-        c.add_factory(foobar, 'foobar', True)
+        c.add_provider(foobar, True)
 
         self.assertFalse(c.is_cached('foobar'))
         dict1 = c('foobar')
@@ -58,6 +58,24 @@ class TestContainer(unittest.TestCase):
         c = knot.Container()
 
         @knot.factory(c)
+        def foo(container):
+            return 'bar'
+
+        self.assertEqual(c('foo'), 'bar')
+
+    def test_registers_service_with_decorator(self):
+        c = knot.Container()
+
+        @knot.service(c)
+        def foo(container):
+            return 'bar'
+
+        self.assertEqual(c('foo'), 'bar')
+
+    def test_registers_provider_with_decorator(self):
+        c = knot.Container()
+
+        @knot.provider(c, False)
         def foo(container):
             return 'bar'
 
