@@ -27,15 +27,15 @@ class TestContainer(unittest.TestCase):
         self.assertEqual(c('foo', 'bar'), 'bar')
         self.assertEqual(c('foo', lambda c: 'baz'), 'baz')
 
-    def test_uses_name_callable(self):
+    def test_uses_alternative_name(self):
         c = knot.Container()
 
-        def foo(container):
-            return 'bar'
+        def foobar(container):
+            return 'foobar'
 
-        c.add_provider(foo, False)
+        c.add_provider(foobar, False, 'foobaz')
 
-        self.assertEqual(c('foo'), 'bar')
+        self.assertEqual(c('foobaz'), 'foobar')
 
     def test_caches_return_value_provider(self):
         c = knot.Container()
