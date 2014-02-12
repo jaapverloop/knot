@@ -41,7 +41,7 @@ class FunctionCache(object):
 
 class Container(dict):
     """The :class:`Container` object acts as a central registry for factories
-    and arbitrary data like configuration settings.
+    and configuration settings.
 
     This class is implemented as a subclass of ``dict``. All standard
     dictionary methods are available without any modifications.
