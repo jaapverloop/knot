@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+from mock import MagicMock
 from knot import Container, factory, service, provider
 
 
@@ -55,30 +56,33 @@ class TestContainer(unittest.TestCase):
 
     def test_registers_factory_with_decorator(self):
         c = Container()
+        c.add_factory = MagicMock()
 
         @factory(c)
         def foo(container):
             return 'bar'
 
-        self.assertEqual(c.provide('foo'), 'bar')
+        c.add_factory.assert_called_once_with(foo, None)
 
     def test_registers_service_with_decorator(self):
         c = Container()
+        c.add_service = MagicMock()
 
         @service(c)
         def foo(container):
             return 'bar'
 
-        self.assertEqual(c.provide('foo'), 'bar')
+        c.add_service.assert_called_once_with(foo, None)
 
     def test_registers_provider_with_decorator(self):
         c = Container()
+        c.add_provider = MagicMock()
 
         @provider(c, False)
         def foo(container):
             return 'bar'
 
-        self.assertEqual(c.provide('foo'), 'bar')
+        c.add_provider.assert_called_once_with(foo, False, None)
 
 
 if __name__ == '__main__':
