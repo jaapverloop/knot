@@ -67,6 +67,19 @@ class TestContainer(unittest.TestCase):
         c.add_factory(foo, 'alternative')
         c.add_provider.assert_called_with(foo, False, 'alternative')
 
+    def test_registers_service(self):
+        c = Container()
+        c.add_provider = MagicMock()
+
+        def foo(container):
+            pass
+
+        c.add_service(foo)
+        c.add_provider.assert_called_with(foo, True, None)
+
+        c.add_service(foo, 'alternative')
+        c.add_provider.assert_called_with(foo, True, 'alternative')
+
     def test_registers_factory_with_decorator(self):
         c = Container()
         c.add_factory = MagicMock()
