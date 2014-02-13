@@ -20,6 +20,7 @@ def factory(container, name=None, cache=False):
     """
     def decorator(factory):
         container.add_factory(factory, name)
+        return factory
 
     return decorator
 
@@ -30,6 +31,7 @@ def service(container, name=None):
     """
     def decorator(service):
         container.add_service(service, name)
+        return service
 
     return decorator
 
@@ -40,6 +42,7 @@ def provider(container, cache, name=None):
     """
     def decorator(provider):
         container.add_provider(provider, cache, name)
+        return provider
 
     return decorator
 
