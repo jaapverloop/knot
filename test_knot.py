@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-import knot
+from knot import Container, factory, service, provider
 
 
 class TestContainer(unittest.TestCase):
     def test_returns_return_value_provider(self):
-        c = knot.Container()
+        c = Container()
 
         def foo(container):
             return 'bar'
@@ -17,17 +17,17 @@ class TestContainer(unittest.TestCase):
         self.assertEqual(c.provide('foo'), 'bar')
 
     def test_returns_value(self):
-        c = knot.Container({'value': 'foobar'})
+        c = Container({'value': 'foobar'})
 
         self.assertEqual(c.provide('value'), 'foobar')
 
     def test_returns_default(self):
-        c = knot.Container()
+        c = Container()
 
         self.assertEqual(c.provide('foo', 'bar'), 'bar')
 
     def test_caches_return_value_provider(self):
-        c = knot.Container()
+        c = Container()
 
         def foobar(container):
             return {}
@@ -44,7 +44,7 @@ class TestContainer(unittest.TestCase):
         assert dict1 is dict2
 
     def test_uses_alternative_name(self):
-        c = knot.Container()
+        c = Container()
 
         def foobar(container):
             return 'foobar'
@@ -54,27 +54,27 @@ class TestContainer(unittest.TestCase):
         self.assertEqual(c.provide('foobaz'), 'foobar')
 
     def test_registers_factory_with_decorator(self):
-        c = knot.Container()
+        c = Container()
 
-        @knot.factory(c)
+        @factory(c)
         def foo(container):
             return 'bar'
 
         self.assertEqual(c.provide('foo'), 'bar')
 
     def test_registers_service_with_decorator(self):
-        c = knot.Container()
+        c = Container()
 
-        @knot.service(c)
+        @service(c)
         def foo(container):
             return 'bar'
 
         self.assertEqual(c.provide('foo'), 'bar')
 
     def test_registers_provider_with_decorator(self):
-        c = knot.Container()
+        c = Container()
 
-        @knot.provider(c, False)
+        @provider(c, False)
         def foo(container):
             return 'bar'
 
