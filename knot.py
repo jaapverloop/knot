@@ -125,7 +125,8 @@ class Container(dict):
             Alternative name of the provider.
             Default: name of the callable.
         """
-        self[name or provider.__name__] = FunctionCache(provider) if cache else provider
+        register_as = name or provider.__name__
+        self[register_as] = FunctionCache(provider) if cache else provider
 
     def is_cached(self, name):
         """Determines if the return value is cached. Always returns false if
