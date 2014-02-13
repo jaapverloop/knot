@@ -62,7 +62,13 @@ class TestContainer(unittest.TestCase):
         def foo(container):
             return 'bar'
 
-        c.add_factory.assert_called_once_with(foo, None)
+        c.add_factory.assert_called_with(foo, None)
+
+        @factory(c, 'alternative')
+        def bar(container):
+            pass
+
+        c.add_factory.assert_called_with(bar, 'alternative')
 
     def test_registers_service_with_decorator(self):
         c = Container()
@@ -72,7 +78,13 @@ class TestContainer(unittest.TestCase):
         def foo(container):
             return 'bar'
 
-        c.add_service.assert_called_once_with(foo, None)
+        c.add_service.assert_called_with(foo, None)
+
+        @service(c, 'alternative')
+        def bar(container):
+            pass
+
+        c.add_service.assert_called_with(bar, 'alternative')
 
     def test_registers_provider_with_decorator(self):
         c = Container()
@@ -82,7 +94,13 @@ class TestContainer(unittest.TestCase):
         def foo(container):
             return 'bar'
 
-        c.add_provider.assert_called_once_with(foo, False, None)
+        c.add_provider.assert_called_with(foo, False, None)
+
+        @provider(c, True, 'alternative')
+        def bar(container):
+            pass
+
+        c.add_provider.assert_called_with(bar, True, 'alternative')
 
 
 if __name__ == '__main__':
