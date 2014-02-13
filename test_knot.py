@@ -54,6 +54,19 @@ class TestContainer(unittest.TestCase):
 
         self.assertEqual(c.provide('alternative'), 'foobar')
 
+    def test_registers_factory(self):
+        c = Container()
+        c.add_provider = MagicMock()
+
+        def foo(container):
+            pass
+
+        c.add_factory(foo)
+        c.add_provider.assert_called_with(foo, False, None)
+
+        c.add_factory(foo, 'alternative')
+        c.add_provider.assert_called_with(foo, False, 'alternative')
+
     def test_registers_factory_with_decorator(self):
         c = Container()
         c.add_factory = MagicMock()
