@@ -18,33 +18,33 @@ def factory(container, name=None, cache=False):
     """A decorator to register a factory on the container.
     For more information see :meth:`Container.add_factory`.
     """
-    def decorator(factory):
+    def register(factory):
         container.add_factory(factory, name)
         return factory
 
-    return decorator
+    return register
 
 
 def service(container, name=None):
     """A decorator to register a service on a container.
     For more information see :meth:`Container.add_service`.
     """
-    def decorator(service):
+    def register(service):
         container.add_service(service, name)
         return service
 
-    return decorator
+    return register
 
 
 def provider(container, cache, name=None):
     """A decorator to register a provider on a container.
     For more information see :meth:`Container.add_provider`.
     """
-    def decorator(provider):
+    def register(provider):
         container.add_provider(provider, cache, name)
         return provider
 
-    return decorator
+    return register
 
 
 class FunctionCache(object):
