@@ -50,9 +50,9 @@ class TestContainer(unittest.TestCase):
         def foobar(container):
             return 'foobar'
 
-        c.add_provider(foobar, False, 'foobaz')
+        c.add_provider(foobar, False, 'alternative')
 
-        self.assertEqual(c.provide('foobaz'), 'foobar')
+        self.assertEqual(c.provide('alternative'), 'foobar')
 
     def test_registers_factory_with_decorator(self):
         c = Container()
