@@ -60,7 +60,7 @@ class TestContainer(unittest.TestCase):
 
         @factory(c)
         def foo(container):
-            return 'bar'
+            pass
 
         c.add_factory.assert_called_with(foo, None)
 
@@ -76,7 +76,7 @@ class TestContainer(unittest.TestCase):
 
         @service(c)
         def foo(container):
-            return 'bar'
+            pass
 
         c.add_service.assert_called_with(foo, None)
 
@@ -92,7 +92,7 @@ class TestContainer(unittest.TestCase):
 
         @provider(c, False)
         def foo(container):
-            return 'bar'
+            pass
 
         c.add_provider.assert_called_with(foo, False, None)
 
