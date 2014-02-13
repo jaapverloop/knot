@@ -14,7 +14,7 @@ Knot is a simple dependency container for Python.
 from functools import update_wrapper
 
 
-def factory(container, name=None, cache=False):
+def factory(container, name=None):
     """A decorator to register a factory on the container.
     For more information see :meth:`Container.add_factory`.
     """
