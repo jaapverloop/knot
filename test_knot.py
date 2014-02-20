@@ -35,10 +35,8 @@ class TestContainer(unittest.TestCase):
 
         c.add_provider(foobar, True)
 
-        self.assertFalse(c.is_cached('foobar'))
         dict1 = c.provide('foobar')
         dict2 = c.provide('foobar')
-        self.assertTrue(c.is_cached('foobar'))
 
         assert isinstance(dict1, dict)
         assert isinstance(dict2, dict)
