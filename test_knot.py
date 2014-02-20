@@ -126,6 +126,27 @@ class TestContainer(unittest.TestCase):
 
         c.add_provider.assert_called_with(bar, True, 'alternative')
 
+    def test_returns_whether_return_value_provider_is_cached(self):
+        c = Container()
+
+        def foobar(container):
+            return {}
+
+        c.add_provider(foobar, True)
+
+        self.assertFalse(c.is_cached('foobar'))
+        c.provide('foobar')
+        self.assertTrue(c.is_cached('foobar'))
+
+        def foobaz(container):
+            return {}
+
+        c.add_provider(foobaz, False)
+
+        self.assertFalse(c.is_cached('foobaz'))
+        c.provide('foobaz')
+        self.assertFalse(c.is_cached('foobaz'))
+
 
 if __name__ == '__main__':
     unittest.main()
