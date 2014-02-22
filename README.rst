@@ -22,14 +22,17 @@ Example
 
     from knot import Container
 
-    c = Container()
+    c = Container({
+      'host': 'localhost',
+      'port': '6379',
+    })
 
-    @c.factory(cache=True)
-    def app(c):
-        from somewhere import App
-        app = App()
+    @provider(c, False)
+    def connection(c):
+        connection = Connection(c['host'], c['port'])
+        return connection
 
-        return app
+    connection = c.provide('connection')
 
 
 Installation
