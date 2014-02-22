@@ -27,12 +27,18 @@ Example
       'port': '6379',
     })
 
-    @provider(c, False)
+    @service(c)
     def connection(c):
         connection = Connection(c['host'], c['port'])
         return connection
 
-    connection = c.provide('connection')
+    @factory(c)
+    def worker(c):
+        worker = Worker(c.provide('connection'))
+        return worker
+
+    worker1 = c.provide('worker')
+    worker2 = c.provide('worker')
 
 
 Installation
