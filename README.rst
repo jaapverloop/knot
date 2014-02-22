@@ -20,7 +20,7 @@ Example
 
 .. code-block:: python
 
-    from knot import Container
+    from knot import Container, service, factory
 
     c = Container({
       'host': 'localhost',
