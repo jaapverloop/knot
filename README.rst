@@ -1,5 +1,5 @@
 Knot
-====
+****
 
 .. image:: https://badge.fury.io/py/knot.png
   :target: http://badge.fury.io/py/knot
@@ -11,12 +11,12 @@ Knot is a simple dependency container for Python.
 
 
 Inspiration
------------
+===========
 Pimple (http://pimple.sensiolabs.org/)
 
 
 Example
--------
+=======
 
 .. code-block:: python
 
@@ -42,7 +42,7 @@ Example
 
 
 Installation
-------------
+============
 
 Install Knot with the following command:
 
@@ -52,9 +52,9 @@ Install Knot with the following command:
 
 
 Tests
------
+=====
 
-To run the tests, install ``pytest`` first:
+To run the tests, install **pytest** first:
 
 .. code-block:: console
 
@@ -68,6 +68,6 @@ Then, run the tests with the following command:
 
 
 License
--------
+=======
 
-MIT, see ``LICENSE`` for more details.
+MIT, see **LICENSE** for more details.
