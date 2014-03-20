@@ -7,7 +7,7 @@ Knot
 .. image:: https://travis-ci.org/jaapverloop/knot.png?branch=master
   :target: https://travis-ci.org/jaapverloop/knot
 
-Knot is a simple dependency container for Python.
+Knot is a small do-it-yourself (DIY) dependency container for Python.
 
 
 Installation
