@@ -27,6 +27,13 @@ class TestContainer(unittest.TestCase):
 
         self.assertEqual(c.provide('foo', 'bar'), 'bar')
 
+    def test_forwards_to_provide(self):
+        c = Container()
+        c.provide = MagicMock()
+
+        c.provide('foo', 'bar', 'default')
+        c.provide.assert_called_with('foo', 'bar', 'default')
+
     def test_caches_return_value_provider(self):
         c = Container()
 

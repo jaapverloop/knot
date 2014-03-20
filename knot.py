@@ -81,6 +81,12 @@ class Container(dict):
     dictionary methods are available without any modifications.
     """
 
+    def __call__(self, *args):
+        """A shortcut method for convenience.
+        For more information see :meth:`Container.provide`.
+        """
+        return self.provide(*args)
+
     def provide(self, name, default=None):
         """Gets the value registered with ``name`` and determines whether the
         value is a provider or a configuration setting. The ``default`` value
