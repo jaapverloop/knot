@@ -10,11 +10,6 @@ Knot
 Knot is a simple dependency container for Python.
 
 
-Inspiration
-===========
-Pimple (http://pimple.sensiolabs.org/)
-
-
 Example
 =======
 
@@ -65,6 +60,12 @@ Then, run the tests with the following command:
 .. code-block:: console
 
   $ make test
+
+
+Inspiration
+===========
+
+Pimple (http://pimple.sensiolabs.org/)
 
 
 License
