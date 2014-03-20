@@ -10,32 +10,6 @@ Knot
 Knot is a simple dependency container for Python.
 
 
-Example
-=======
-
-.. code-block:: python
-
-    from knot import Container, service, factory
-
-    c = Container({
-      'host': 'localhost',
-      'port': '6379',
-    })
-
-    @service(c)
-    def connection(c):
-        connection = Connection(c['host'], c['port'])
-        return connection
-
-    @factory(c)
-    def worker(c):
-        worker = Worker(c.provide('connection'))
-        return worker
-
-    worker1 = c.provide('worker')
-    worker2 = c.provide('worker')
-
-
 Installation
 ============
 
