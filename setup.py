@@ -6,11 +6,11 @@ from setuptools import setup
 
 setup(
     name='knot',
-    version='0.2.0',
+    version='0.3.0',
     description='Knot is a simple dependency container for Python.',
     long_description=open('README.rst').read(),
     url='https://github.com/jaapverloop/knot',
-    download_url = 'https://github.com/jaapverloop/knot/tarball/0.2.0',
+    download_url = 'https://github.com/jaapverloop/knot/tarball/0.3.0',
     author='Jaap Verloop',
     author_email='j.verloop@gmail.com',
     py_modules=['knot'],
