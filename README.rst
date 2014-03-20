@@ -86,7 +86,7 @@ Retrieve what you have defined.
 
     conn = c.provide('connection')
 
-For convience, you can also use the shortcut.
+For convenience, you can also use the shortcut.
 
 .. code-block:: python
 
