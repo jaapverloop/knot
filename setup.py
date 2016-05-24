@@ -9,7 +9,7 @@ with open('README.rst') as f:
 
 setup(
     name='knot',
-    version='0.3.0',
+    version='0.4.0',
     description='A small do-it-yourself dependency container.',
     long_description=readme,
     url='https://github.com/jaapverloop/knot',

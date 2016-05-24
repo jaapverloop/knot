@@ -4,6 +4,15 @@ Knot Changelog
 Here you can see a list of changes between each release.
 
 
+Version 0.4
+-----------
+
+2016-05-24: Feature release.
+
+- Raise a ``KeyError`` exception instead of returning an optional default
+  value in case a ``name`` is not found.
+
+
 Version 0.3
 -----------
 
