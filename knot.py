@@ -87,10 +87,10 @@ class Container(dict):
         """
         return self.provide(*args)
 
-    def provide(self, name, default=None):
+    def provide(self, name):
         """Gets the value registered with ``name`` and determines whether the
-        value is a provider or a configuration setting. The ``default`` value
-        is returned if ``name`` is unknown.
+        value is a provider or a configuration setting. The ``KeyError`` is
+        raised when the ``name`` is not found.
 
         The registered value is interpreted as a provider if it's callable. The
         provider is called with a single argument, the current
@@ -99,11 +99,9 @@ class Container(dict):
 
         :param name:
             The name of the provider or configuration setting.
-        :param default:
-            The default value to return if name is unknown.
         """
-        rv = super(Container, self).get(name)
-        return rv(self) if callable(rv) else rv or default
+        rv = self[name]
+        return rv(self) if callable(rv) else rv
 
     def add_factory(self, factory, name=None):
         """Registers a factory on the container. A factory is a provider with

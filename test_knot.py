@@ -22,17 +22,17 @@ class TestContainer(unittest.TestCase):
 
         self.assertEqual(c.provide('value'), 'foobar')
 
-    def test_returns_default(self):
+    def test_raises_key_error_when_name_not_found(self):
         c = Container()
 
-        self.assertEqual(c.provide('foo', 'bar'), 'bar')
+        self.assertRaises(KeyError, lambda: c.provide('foo'))
 
     def test_forwards_to_provide(self):
         c = Container()
         c.provide = MagicMock()
 
-        c.provide('foo', 'bar', 'default')
-        c.provide.assert_called_with('foo', 'bar', 'default')
+        c.provide('foo')
+        c.provide.assert_called_with('foo')
 
     def test_caches_return_value_provider(self):
         c = Container()
