@@ -1,2 +1,5 @@
 *.pyc
+*.egg-info
+.python-version
+.tox
 dist

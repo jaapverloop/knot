@@ -173,17 +173,17 @@ Install Knot with the following command:
 Tests
 =====
 
-To run the tests, install **pytest** first:
+To run the tests, install **tox** first:
 
 .. code-block:: console
 
-  $ pip install pytest
+  $ pip install tox
 
 Then, run the tests with the following command:
 
 .. code-block:: console
 
-  $ make test
+  $ tox
 
 
 Inspiration
