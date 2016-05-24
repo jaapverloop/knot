@@ -4,18 +4,21 @@
 from setuptools import setup
 
 
+with open('README.rst') as f:
+    readme = f.read()
+
 setup(
     name='knot',
     version='0.3.0',
-    description='Knot is a simple dependency container for Python.',
-    long_description=open('README.rst').read(),
+    description='A small do-it-yourself dependency container.',
+    long_description=readme,
     url='https://github.com/jaapverloop/knot',
     download_url = 'https://github.com/jaapverloop/knot/tarball/0.3.0',
     author='Jaap Verloop',
     author_email='j.verloop@gmail.com',
     py_modules=['knot'],
     include_package_data=True,
-    license=open('LICENSE').read(),
+    license='MIT',
     keywords = ['dependency', 'container'],
     classifiers=(
         'Intended Audience :: Developers',
