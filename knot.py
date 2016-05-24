@@ -6,7 +6,7 @@ knot
 
 Knot is a simple dependency container for Python.
 
-:copyright: (c) 2014 by Jaap Verloop.
+:copyright: (c) by Jaap Verloop.
 :license: MIT, see LICENSE for more details.
 
 """
